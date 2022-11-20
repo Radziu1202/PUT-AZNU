@@ -1,0 +1,84 @@
+
+<wsdl:definitions
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://onlinebakery.bp.org/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:ns3="http://schemas.xmlsoap.org/soap/http"
+	xmlns:ns1="http://www.bp.org/onlineBakery/"
+	name="OnlineBakeryEndpointService"
+	targetNamespace="http://onlinebakery.bp.org/">
+	<wsdl:import
+		location="http://localhost:8080/soap-api/service/onlineBakery?wsdl=OnlineBakery.wsdl"
+		namespace="http://www.bp.org/onlineBakery/">
+	</wsdl:import>
+	<wsdl:binding
+		name="OnlineBakeryEndpointServiceSoapBinding" type="ns1:OnlineBakery">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="cancelCakeOrder">
+			<soap:operation
+				soapAction="http://www.bp.org/onlineBakery/cancelCakeOrder"
+				style="document" />
+			<wsdl:input name="cancelCakeOrder">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="cancelCakeOrderResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="OrderExceptionMsg">
+				<soap:fault name="OrderExceptionMsg" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="orderCake">
+			<soap:operation
+				soapAction="http://www.bp.org/onlineBakery/orderCake"
+				style="document" />
+			<wsdl:input name="orderCake">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="orderCakeResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="OrderExceptionMsg">
+				<soap:fault name="OrderExceptionMsg" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="orderBread">
+			<soap:operation
+				soapAction="http://www.bp.org/onlineBakery/orderBread"
+				style="document" />
+			<wsdl:input name="orderBread">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="orderBreadResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="OrderExceptionMsg">
+				<soap:fault name="OrderExceptionMsg" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="cancelBreadOrder">
+			<soap:operation
+				soapAction="http://www.bp.org/onlineBakery/cancelBreadOrder"
+				style="document" />
+			<wsdl:input name="cancelBreadOrder">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="cancelBreadOrderResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="OrderExceptionMsg">
+				<soap:fault name="OrderExceptionMsg" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OnlineBakeryEndpointService">
+		<wsdl:port
+			binding="tns:OnlineBakeryEndpointServiceSoapBinding"
+			name="OnlineBakeryEndpointPort">
+			<soap:address
+				location="http://localhost:8080/soap-api/service/onlineBakery" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

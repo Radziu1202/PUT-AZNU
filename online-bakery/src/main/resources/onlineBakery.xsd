@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.bp.org" xmlns:tns="http://www.bp.org"
+	xmlns:bpt="http://www.bp.org/types" elementFormDefault="qualified">
+	<import schemaLocation="types.xsd"
+		namespace="http://www.bp.org/types" />
+	
+	<element name="orderCakeRequest">
+		<complexType>
+			<sequence>
+				<element name="person" type="bpt:Person" />
+    			<element name="deliveryPlace" type="bpt:DeliveryPlace"/>
+    			<element name="cake" type="bpt:Cake"/>
+    			<element name="payment" type="bpt:PaymentCard"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="orderCakeResponse" type="bpt:OrderInfo" />
+	
+	<element name="cancelCakeOrderRequest">
+		<complexType>
+			<attribute name="orderId" type="string" />
+		</complexType>
+	</element>
+	<element name="cancelCakeOrderResponse" type="bpt:OrderInfo" />
+	
+	
+	
+	<element name="orderBreadRequest">
+		<complexType>
+			<sequence>
+				<element name="person" type="bpt:Person" />
+    			<element name="deliveryPlace" type="bpt:DeliveryPlace"/>
+    			<element name="bread" type="bpt:Bread"/>
+			</sequence>
+		</complexType>
+	</element>
+	
+	<element name="orderBreadResponse" type="bpt:OrderInfo" />
+	
+	
+	<element name="orderPreviewRequest">
+		<complexType>
+			<sequence>
+				<element name="orderId" type="string" />
+
+			</sequence>
+		</complexType>
+	</element>
+	
+	<element name="orderPreviewResponse" type="bpt:OrderInfo" />
+
+
+	<element name="cancelBreadOrderRequest">
+		<complexType>
+			<attribute name="orderId" type="string" />
+		</complexType>
+	</element>
+	<element name="cancelBreadOrderResponse" type="bpt:OrderInfo" />
+
+	<element name="orderException" type="bpt:OrderException" />
+</schema>
