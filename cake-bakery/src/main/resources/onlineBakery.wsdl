@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.bp.org/onlineBakery/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="onlineBakery"
+	targetNamespace="http://www.bp.org/onlineBakery/"
+	xmlns:bp="http://www.bp.org">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.bp.org/">
+			<xsd:import schemaLocation="onlineBakery.xsd"
+				namespace="http://www.bp.org" />
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="orderCakeRequestMsg">
+		<wsdl:part element="bp:orderCakeRequest" name="payload" />
+	</wsdl:message>
+	<wsdl:message name="orderIdRequestMsg">
+		<wsdl:part element="bp:orderIdRequest" name="payload" />
+	</wsdl:message>
+	
+	<wsdl:message name="orderCakeResponseMsg">
+		<wsdl:part element="bp:orderCakeResponse" name="payload" />
+	</wsdl:message>
+	
+	
+	<wsdl:message name="orderPreviewRequestMsg">
+		<wsdl:part element="bp:orderPreviewRequest" name="payload" />
+	</wsdl:message>
+	<wsdl:message name="orderPreviewResponseMsg">
+		<wsdl:part element="bp:orderPreviewResponse" name="payload" />
+	</wsdl:message>
+
+	<wsdl:message name="cancelCakeOrderRequestMsg">
+		<wsdl:part element="bp:cancelCakeOrderRequest" name="payload" />
+	</wsdl:message>
+	<wsdl:message name="cancelCakeOrderResponseMsg">
+		<wsdl:part element="bp:cancelCakeOrderResponse"
+			name="payload" />
+	</wsdl:message>
+
+
+	<wsdl:message name="orderExceptionMsg">
+		<wsdl:part element="bp:orderException" name="payload" />
+	</wsdl:message>
+
+	<wsdl:portType name="OnlineBakery">
+		<wsdl:operation name="orderCake">
+			<wsdl:input message="tns:orderCakeRequestMsg" />
+			<wsdl:output message="tns:orderCakeResponseMsg" />
+			<wsdl:fault message="tns:orderExceptionMsg"
+				name="orderException" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="cancelCakeOrder">
+			<wsdl:input message="tns:cancelCakeOrderRequestMsg" />
+			<wsdl:output message="tns:cancelCakeOrderResponseMsg" />
+			<wsdl:fault message="tns:orderExceptionMsg"
+				name="orderException" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="orderPreview">
+			<wsdl:input message="tns:orderPreviewRequestMsg" />
+			<wsdl:output message="tns:orderPreviewResponseMsg" />
+			<wsdl:fault message="tns:orderExceptionMsg"
+				name="orderException" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="payForOrder">
+			<wsdl:input message="tns:orderIdRequestMsg" />
+			<wsdl:fault message="tns:orderExceptionMsg"
+				name="orderException" />
+		</wsdl:operation>
+		
+	</wsdl:portType>
+	<wsdl:binding name="OnlineBakerySOAP"
+		type="tns:OnlineBakery">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="orderCake">
+			<soap:operation
+				soapAction="http://www.bp.org/onlineBakery/orderCake" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="orderException">
+				<soap:fault name="orderException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="cancelCakeOrder">
+			<soap:operation
+				soapAction="http://www.bp.org/onlineBakery/cancelCakeOrder" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="orderException">
+				<soap:fault name="orderException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="payForOrder">
+			<soap:operation
+				soapAction="http://www.bp.org/onlineBakery/payForOrder" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:fault name="orderException">
+				<soap:fault name="orderException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+	</wsdl:binding>
+	<wsdl:service name="OnlineBakeryService">
+		<wsdl:port binding="tns:OnlineBakerySOAP"
+			name="OnlineBakeryPort">
+			<soap:address location="http://www.bp.org/onlineBakery/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

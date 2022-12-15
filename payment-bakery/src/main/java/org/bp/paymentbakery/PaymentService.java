@@ -33,13 +33,16 @@ public class PaymentService {
 		public PaymentResponse payment(
 				@org.springframework.web.bind.annotation.RequestBody PaymentRequest paymentRequest) {
 			if (paymentRequest!=null && paymentRequest.getAmount()!=null 
-					&& paymentRequest.getAmount().getValue()!=null
-					&& paymentRequest.getAmount().getValue().compareTo(new BigDecimal(0))<0) {
+					&& paymentRequest.getAmount()!=null
+					&& paymentRequest.getAmount().compareTo(new BigDecimal(0))<0) {
 
 				throw new PaymentException("Amount value can not negative");
 				
+			}else if (paymentRequest.getPaymentCard().getName() == "" ||
+					paymentRequest.getPaymentCard().getNumber() == "" ||
+					paymentRequest.getPaymentCard().getValidTo() == "") {
+				throw new PaymentException("PaymentCard's data is not complete");
 			}
-				
 			PaymentResponse paymentResponse = new PaymentResponse();
 			paymentResponse.setTransactionDate(new Date());
 			paymentResponse.setTransactionId(UUID.randomUUID().toString());

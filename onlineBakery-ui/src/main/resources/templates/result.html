@@ -151,7 +151,7 @@ button:hover {
 
 <body>
 	<form action="#" class="decor"
-	th:action="@{/paymentForm}" th:object="${orderInfo}" method="post"
+	th:action="@{/paymentForm}" th:object="${oi}"  method="post"
 	>
 		<div class="form-left-decoration"></div>
 		<div class="form-right-decoration"></div>
@@ -162,7 +162,11 @@ button:hover {
 			<h2 th:text="'first name ' + ${orderInfo.person.firstName}"></h2>
 			<h2 th:text="'last name: ' + ${orderInfo.person.lastName}"></h2>
 			<h2 th:text="'cost: ' + ${orderInfo.cost}"></h2>
+			<input type="hidden"  th:value=${orderInfo.cost} id="cost" name="cost" />
+			<input type="hidden"  th:value=${orderInfo.id} id="id" name="id"  />
+			
 			<input type="submit" value="go to payment" />
+	
 		</div>
 	</form>
 </body>

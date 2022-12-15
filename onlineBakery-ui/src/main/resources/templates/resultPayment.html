@@ -150,14 +150,15 @@ button:hover {
 </head>
 
 <body>
-	<form action="#" class="decor">
+	<form action="#" class="decor" th:object="${paymentResponse}">
 		<div class="form-left-decoration"></div>
 		<div class="form-right-decoration"></div>
 		<div class="circle"></div>
 		<div class="form-inner">
 			<h1>Result of payment</h1>
-			<h2 th:text="'amount: ' + ${paymentRequest.amount.value}"></h2>
-			<input type="submit" value="order a cake"  formaction="orderCake" />
+			<h1>Payment confirmed</h1>
+			<h2 th:text="'transaction id: ' + ${paymentResponse.getTransactionId()}"></h2>
+			<input type="submit" value="go back to menu"  formaction="menu" />
 		</div>
 	</form>
 </body>

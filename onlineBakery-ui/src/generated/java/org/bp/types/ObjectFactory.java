@@ -30,14 +30,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Bread }
-     * 
-     */
-    public Bread createBread() {
-        return new Bread();
-    }
-
-    /**
      * Create an instance of {@link OrderInfo }
      * 
      */
@@ -83,14 +75,6 @@ public class ObjectFactory {
      */
     public OrderException createOrderException() {
         return new OrderException();
-    }
-
-    /**
-     * Create an instance of {@link Bread.BreadType }
-     * 
-     */
-    public Bread.BreadType createBreadBreadType() {
-        return new Bread.BreadType();
     }
 
 }

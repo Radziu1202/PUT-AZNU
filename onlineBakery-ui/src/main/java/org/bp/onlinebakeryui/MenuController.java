@@ -7,12 +7,7 @@ import java.net.URL;
 
 import javax.xml.namespace.QName;
 
-import org.bp.CancelCakeOrderRequest;
-import org.bp.OrderCakeRequest;
-import org.bp.onlinebakery.OnlineBakery;
-import org.bp.onlinebakery.OnlineBakeryEndpointService;
-import org.bp.onlinebakery.OrderExceptionMsg;
-import org.bp.types.OrderInfo;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

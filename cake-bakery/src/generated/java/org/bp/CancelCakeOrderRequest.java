@@ -17,8 +17,6 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;sequence&gt;
- *       &lt;/sequence&gt;
  *       &lt;attribute name="orderId" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -29,8 +27,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-@XmlRootElement(name = "cancelBreadOrderRequest")
-public class CancelBreadOrderRequest {
+@XmlRootElement(name = "cancelCakeOrderRequest")
+public class CancelCakeOrderRequest {
 
     @XmlAttribute(name = "orderId")
     protected String orderId;

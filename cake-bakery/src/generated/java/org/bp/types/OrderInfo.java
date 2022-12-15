@@ -1,31 +1,30 @@
 
-package org.bp;
+package org.bp.types;
 
+import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import org.bp.types.Bread;
-import org.bp.types.DeliveryPlace;
-import org.bp.types.Person;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for OrderInfo complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType&gt;
+ * &lt;complexType name="OrderInfo"&gt;
  *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *     &lt;extension base="{http://www.bp.org/types}Cake"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="cost" type="{http://www.w3.org/2001/XMLSchema}decimal"/&gt;
  *         &lt;element name="person" type="{http://www.bp.org/types}Person"/&gt;
  *         &lt;element name="deliveryPlace" type="{http://www.bp.org/types}DeliveryPlace"/&gt;
- *         &lt;element name="bread" type="{http://www.bp.org/types}Bread"/&gt;
+ *         &lt;element name="payment" type="{http://www.bp.org/types}PaymentCard"/&gt;
  *       &lt;/sequence&gt;
- *     &lt;/restriction&gt;
+ *     &lt;/extension&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
@@ -33,20 +32,75 @@ import org.bp.types.Person;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
+@XmlType(name = "OrderInfo", propOrder = {
+    "id",
+    "cost",
     "person",
     "deliveryPlace",
-    "bread"
+    "payment"
 })
-@XmlRootElement(name = "orderBreadRequest")
-public class OrderBreadRequest {
+public class OrderInfo
+    extends Cake
+{
 
+    @XmlElement(required = true)
+    protected String id;
+    @XmlElement(required = true)
+    protected BigDecimal cost;
     @XmlElement(required = true)
     protected Person person;
     @XmlElement(required = true)
     protected DeliveryPlace deliveryPlace;
     @XmlElement(required = true)
-    protected Bread bread;
+    protected PaymentCard payment;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
+    }
+
+    /**
+     * Gets the value of the cost property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    /**
+     * Sets the value of the cost property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setCost(BigDecimal value) {
+        this.cost = value;
+    }
 
     /**
      * Gets the value of the person property.
@@ -97,27 +151,27 @@ public class OrderBreadRequest {
     }
 
     /**
-     * Gets the value of the bread property.
+     * Gets the value of the payment property.
      * 
      * @return
      *     possible object is
-     *     {@link Bread }
+     *     {@link PaymentCard }
      *     
      */
-    public Bread getBread() {
-        return bread;
+    public PaymentCard getPayment() {
+        return payment;
     }
 
     /**
-     * Sets the value of the bread property.
+     * Sets the value of the payment property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Bread }
+     *     {@link PaymentCard }
      *     
      */
-    public void setBread(Bread value) {
-        this.bread = value;
+    public void setPayment(PaymentCard value) {
+        this.payment = value;
     }
 
 }

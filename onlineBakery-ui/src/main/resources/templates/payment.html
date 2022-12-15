@@ -159,6 +159,9 @@ button:hover {
 				th:field="*{paymentCard.name}" placeholder="card owner's name" />
 				<input type="text"
 				th:field="*{paymentCard.number}" placeholder="Card number" />
+				<input type="hidden"  th:value=${paymentRequest.amount} id="amount" name="amount" />
+				<input type="hidden"  th:value=${paymentRequest.orderId} id="orderId" name="orderId"  />
+				
 			 <input type="submit" value="Submit" />
 		</div>
 

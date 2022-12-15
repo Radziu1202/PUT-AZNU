@@ -26,11 +26,10 @@ import org.bp.types.OrderInfo;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CancelBreadOrderResponse_QNAME = new QName("http://www.bp.org", "cancelBreadOrderResponse");
     private final static QName _CancelCakeOrderResponse_QNAME = new QName("http://www.bp.org", "cancelCakeOrderResponse");
-    private final static QName _OrderBreadResponse_QNAME = new QName("http://www.bp.org", "orderBreadResponse");
     private final static QName _OrderCakeResponse_QNAME = new QName("http://www.bp.org", "orderCakeResponse");
     private final static QName _OrderException_QNAME = new QName("http://www.bp.org", "orderException");
+    private final static QName _OrderIdRequest_QNAME = new QName("http://www.bp.org", "orderIdRequest");
     private final static QName _OrderPreviewResponse_QNAME = new QName("http://www.bp.org", "orderPreviewResponse");
 
     /**
@@ -41,27 +40,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CancelBreadOrderRequest }
-     * 
-     */
-    public CancelBreadOrderRequest createCancelBreadOrderRequest() {
-        return new CancelBreadOrderRequest();
-    }
-
-    /**
      * Create an instance of {@link CancelCakeOrderRequest }
      * 
      */
     public CancelCakeOrderRequest createCancelCakeOrderRequest() {
         return new CancelCakeOrderRequest();
-    }
-
-    /**
-     * Create an instance of {@link OrderBreadRequest }
-     * 
-     */
-    public OrderBreadRequest createOrderBreadRequest() {
-        return new OrderBreadRequest();
     }
 
     /**
@@ -88,35 +71,9 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link OrderInfo }{@code >}
      */
-    @XmlElementDecl(namespace = "http://www.bp.org", name = "cancelBreadOrderResponse")
-    public JAXBElement<OrderInfo> createCancelBreadOrderResponse(OrderInfo value) {
-        return new JAXBElement<OrderInfo>(_CancelBreadOrderResponse_QNAME, OrderInfo.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OrderInfo }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link OrderInfo }{@code >}
-     */
     @XmlElementDecl(namespace = "http://www.bp.org", name = "cancelCakeOrderResponse")
     public JAXBElement<OrderInfo> createCancelCakeOrderResponse(OrderInfo value) {
         return new JAXBElement<OrderInfo>(_CancelCakeOrderResponse_QNAME, OrderInfo.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OrderInfo }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link OrderInfo }{@code >}
-     */
-    @XmlElementDecl(namespace = "http://www.bp.org", name = "orderBreadResponse")
-    public JAXBElement<OrderInfo> createOrderBreadResponse(OrderInfo value) {
-        return new JAXBElement<OrderInfo>(_OrderBreadResponse_QNAME, OrderInfo.class, null, value);
     }
 
     /**
@@ -143,6 +100,19 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.bp.org", name = "orderException")
     public JAXBElement<OrderException> createOrderException(OrderException value) {
         return new JAXBElement<OrderException>(_OrderException_QNAME, OrderException.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link String }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://www.bp.org", name = "orderIdRequest")
+    public JAXBElement<String> createOrderIdRequest(String value) {
+        return new JAXBElement<String>(_OrderIdRequest_QNAME, String.class, null, value);
     }
 
     /**
