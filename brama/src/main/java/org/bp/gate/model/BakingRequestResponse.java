@@ -1,7 +1,7 @@
 package org.bp.gate.model;
 
 import org.bp.bread.OrderBreadResponse;
-import org.bp.cake.OrderInfo;
+import org.bp.OrderInfo;
 
 
 public class BakingRequestResponse {

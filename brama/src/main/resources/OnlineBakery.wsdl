@@ -1,169 +1,169 @@
 <wsdl:definitions
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-	xmlns:ns2="http://www.bp.org"
-	xmlns:ns1="http://www.bp.org/onlineBakery/" name="OnlineBakery"
-	targetNamespace="http://www.bp.org/onlineBakery/">
-	<wsdl:types>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns:tns="http://www.bp.org/types" elementFormDefault="qualified"
-			targetNamespace="http://www.bp.org/types" version="1.0">
-			<xs:complexType name="OrderInfo">
-				<xs:complexContent>
-					<xs:extension base="tns:Cake">
-						<xs:sequence>
-							<xs:element name="id" type="xs:string" />
-							<xs:element name="cost" type="xs:decimal" />
-							<xs:element name="person" type="tns:Person" />
-							<xs:element name="deliveryPlace"
-								type="tns:DeliveryPlace" />
-							<xs:element name="payment" type="tns:PaymentCard" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType name="Cake">
-				<xs:sequence>
-					<xs:element name="isVegan" type="xs:boolean" />
-					<xs:element name="birthdayName" type="xs:string" />
-					<xs:element name="CakeType" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="Person">
-				<xs:sequence>
-					<xs:element name="firstName" type="xs:string" />
-					<xs:element name="lastName" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="DeliveryPlace">
-				<xs:sequence>
-					<xs:element name="postalCode" type="xs:string" />
-					<xs:element name="city" type="xs:string" />
-					<xs:element name="address" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="PaymentCard">
-				<xs:sequence>
-					<xs:element name="name" type="xs:string" />
-					<xs:element name="validTo" type="xs:string" />
-					<xs:element name="number" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="OrderException">
-				<xs:sequence>
-					<xs:element name="code" type="xs:int" />
-					<xs:element name="error" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-		</xs:schema>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns:ns1="http://www.bp.org/types" elementFormDefault="qualified"
-			targetNamespace="http://www.bp.org" version="1.0">
-			<xs:import namespace="http://www.bp.org/types" />
-			<xs:element name="cancelCakeOrderRequest">
-				<xs:complexType>
-					<xs:sequence />
-					<xs:attribute name="orderId" type="xs:string" />
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="cancelCakeOrderResponse"
-				type="ns1:OrderInfo" />
-			<xs:element name="orderCakeRequest">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="person" type="ns1:Person" />
-						<xs:element name="deliveryPlace"
-							type="ns1:DeliveryPlace" />
-						<xs:element name="cake" type="ns1:Cake" />
-						<xs:element name="payment" type="ns1:PaymentCard" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="orderCakeResponse" type="ns1:OrderInfo" />
-			<xs:element name="orderException"
-				type="ns1:OrderException" />
-			<xs:element name="orderIdRequest" type="xs:string" />
-			<xs:element name="orderPreviewRequest">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="orderId" type="xs:string" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="orderPreviewResponse"
-				type="ns1:OrderInfo" />
-		</xs:schema>
-	</wsdl:types>
-	<wsdl:message name="orderCakeResponse">
-		<wsdl:part element="ns2:orderCakeResponse" name="payload">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="orderCake">
-		<wsdl:part element="ns2:orderCakeRequest" name="payload">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="cancelCakeOrder">
-		<wsdl:part element="ns2:cancelCakeOrderRequest"
-			name="payload">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="payForOrder">
-		<wsdl:part element="ns2:orderIdRequest" name="payload">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="orderPreviewResponse">
-		<wsdl:part element="ns2:orderPreviewResponse" name="payload">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="cancelCakeOrderResponse">
-		<wsdl:part element="ns2:cancelCakeOrderResponse"
-			name="payload">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="orderPreview">
-		<wsdl:part element="ns2:orderPreviewRequest" name="payload">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="OrderExceptionMsg">
-		<wsdl:part element="ns2:orderException"
-			name="OrderExceptionMsg">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:portType name="OnlineBakery">
-		<wsdl:operation name="cancelCakeOrder">
-			<wsdl:input message="ns1:cancelCakeOrder"
-				name="cancelCakeOrder">
-			</wsdl:input>
-			<wsdl:output message="ns1:cancelCakeOrderResponse"
-				name="cancelCakeOrderResponse">
-			</wsdl:output>
-			<wsdl:fault message="ns1:OrderExceptionMsg"
-				name="OrderExceptionMsg">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="payForOrder">
-			<wsdl:input message="ns1:payForOrder" name="payForOrder">
-			</wsdl:input>
-		</wsdl:operation>
-		<wsdl:operation name="orderCake">
-			<wsdl:input message="ns1:orderCake" name="orderCake">
-			</wsdl:input>
-			<wsdl:output message="ns1:orderCakeResponse"
-				name="orderCakeResponse">
-			</wsdl:output>
-			<wsdl:fault message="ns1:OrderExceptionMsg"
-				name="OrderExceptionMsg">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="orderPreview">
-			<wsdl:input message="ns1:orderPreview" name="orderPreview">
-			</wsdl:input>
-			<wsdl:output message="ns1:orderPreviewResponse"
-				name="orderPreviewResponse">
-			</wsdl:output>
-			<wsdl:fault message="ns1:OrderExceptionMsg"
-				name="OrderExceptionMsg">
-			</wsdl:fault>
-		</wsdl:operation>
-	</wsdl:portType>
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:ns2="http://www.bp.org"
+        xmlns:ns1="http://www.bp.org/onlineBakery/" name="OnlineBakery"
+        targetNamespace="http://www.bp.org/onlineBakery/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:tns="http://www.bp.org/types" elementFormDefault="qualified"
+                   targetNamespace="http://www.bp.org/types" version="1.0">
+            <xs:complexType name="OrderInfo">
+                <xs:complexContent>
+                    <xs:extension base="tns:Cake">
+                        <xs:sequence>
+                            <xs:element name="id" type="xs:string"/>
+                            <xs:element name="cost" type="xs:decimal"/>
+                            <xs:element name="person" type="tns:Person"/>
+                            <xs:element name="deliveryPlace"
+                                        type="tns:DeliveryPlace"/>
+                            <xs:element name="payment" type="tns:PaymentCard"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="Cake">
+                <xs:sequence>
+                    <xs:element name="isVegan" type="xs:boolean"/>
+                    <xs:element name="birthdayName" type="xs:string"/>
+                    <xs:element name="CakeType" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Person">
+                <xs:sequence>
+                    <xs:element name="firstName" type="xs:string"/>
+                    <xs:element name="lastName" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DeliveryPlace">
+                <xs:sequence>
+                    <xs:element name="postalCode" type="xs:string"/>
+                    <xs:element name="city" type="xs:string"/>
+                    <xs:element name="address" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="PaymentCard">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="validTo" type="xs:string"/>
+                    <xs:element name="number" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="OrderException">
+                <xs:sequence>
+                    <xs:element name="code" type="xs:int"/>
+                    <xs:element name="error" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:ns1="http://www.bp.org/types" elementFormDefault="qualified"
+                   targetNamespace="http://www.bp.org" version="1.0">
+            <xs:import namespace="http://www.bp.org/types"/>
+            <xs:element name="cancelCakeOrderRequest">
+                <xs:complexType>
+                    <xs:sequence/>
+                    <xs:attribute name="orderId" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="cancelCakeOrderResponse"
+                        type="ns1:OrderInfo"/>
+            <xs:element name="orderCakeRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="person" type="ns1:Person"/>
+                        <xs:element name="deliveryPlace"
+                                    type="ns1:DeliveryPlace"/>
+                        <xs:element name="cake" type="ns1:Cake"/>
+                        <xs:element name="payment" type="ns1:PaymentCard"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="orderCakeResponse" type="ns1:OrderInfo"/>
+            <xs:element name="orderException"
+                        type="ns1:OrderException"/>
+            <xs:element name="orderIdRequest" type="xs:string"/>
+            <xs:element name="orderPreviewRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="orderId" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="orderPreviewResponse"
+                        type="ns1:OrderInfo"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="orderCakeResponse">
+        <wsdl:part element="ns2:orderCakeResponse" name="payload">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="orderCake">
+        <wsdl:part element="ns2:orderCakeRequest" name="payload">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="cancelCakeOrder">
+        <wsdl:part element="ns2:cancelCakeOrderRequest"
+                   name="payload">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="payForOrder">
+        <wsdl:part element="ns2:orderIdRequest" name="payload">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="orderPreviewResponse">
+        <wsdl:part element="ns2:orderPreviewResponse" name="payload">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="cancelCakeOrderResponse">
+        <wsdl:part element="ns2:cancelCakeOrderResponse"
+                   name="payload">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="orderPreview">
+        <wsdl:part element="ns2:orderPreviewRequest" name="payload">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="OrderExceptionMsg">
+        <wsdl:part element="ns2:orderException"
+                   name="OrderExceptionMsg">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="OnlineBakery">
+        <wsdl:operation name="cancelCakeOrder">
+            <wsdl:input message="ns1:cancelCakeOrder"
+                        name="cancelCakeOrder">
+            </wsdl:input>
+            <wsdl:output message="ns1:cancelCakeOrderResponse"
+                         name="cancelCakeOrderResponse">
+            </wsdl:output>
+            <wsdl:fault message="ns1:OrderExceptionMsg"
+                        name="OrderExceptionMsg">
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="payForOrder">
+            <wsdl:input message="ns1:payForOrder" name="payForOrder">
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="orderCake">
+            <wsdl:input message="ns1:orderCake" name="orderCake">
+            </wsdl:input>
+            <wsdl:output message="ns1:orderCakeResponse"
+                         name="orderCakeResponse">
+            </wsdl:output>
+            <wsdl:fault message="ns1:OrderExceptionMsg"
+                        name="OrderExceptionMsg">
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="orderPreview">
+            <wsdl:input message="ns1:orderPreview" name="orderPreview">
+            </wsdl:input>
+            <wsdl:output message="ns1:orderPreviewResponse"
+                         name="orderPreviewResponse">
+            </wsdl:output>
+            <wsdl:fault message="ns1:OrderExceptionMsg"
+                        name="OrderExceptionMsg">
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
 </wsdl:definitions>
