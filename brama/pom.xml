@@ -10,7 +10,7 @@
 
     <groupId>org.bp</groupId>
     <artifactId>brama</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>brama</name>
     <description>bakery gate</description>
 
@@ -132,13 +132,12 @@
     </dependencies>
 	<build>
 		<plugins>
-			<!--
+<!--
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
 				<version>0.14.0</version>
 				<executions>
-				
 					<execution>
 						<goals>
 							<goal>generate</goal>
@@ -155,7 +154,6 @@
 					<clearOutputDir>true</clearOutputDir>
 				</configuration>
 			</plugin> 
-
 -->
 			<plugin>
 				<groupId>io.swagger.codegen.v3</groupId>
@@ -174,13 +172,12 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/breadBakery.json</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/delivery.json</inputSpec>
 							<language>java</language>
-							<modelPackage>org.bp.bread</modelPackage>
+							<modelPackage>org.bp.delivery</modelPackage>
 							<generateApis>false</generateApis>
 							<generateSupportingFiles>false</generateSupportingFiles>
 							<generateModelDocumentation>false</generateModelDocumentation>
-							<skip>true</skip>
 							<configOptions>
 								<java8>true</java8>
 								<dateLibrary>java8</dateLibrary>

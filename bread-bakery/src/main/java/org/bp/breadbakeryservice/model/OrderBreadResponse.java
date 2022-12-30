@@ -2,7 +2,8 @@ package org.bp.breadbakeryservice.model;
 
 import java.math.BigDecimal;
 
-import org.bp.types.Person;
+import org.bp.Person;
+
 
 public class OrderBreadResponse {
 	private String id;

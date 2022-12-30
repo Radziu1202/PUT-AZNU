@@ -8,7 +8,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.bp.types.Cake;
 import org.bp.types.DeliveryPlace;
-import org.bp.types.PaymentCard;
 import org.bp.types.Person;
 
 
@@ -50,8 +49,7 @@ public class OrderCakeRequest {
     protected DeliveryPlace deliveryPlace;
     @XmlElement(required = true)
     protected Cake cake;
-    @XmlElement(required = true)
-    protected PaymentCard payment;
+
 
     /**
      * Gets the value of the person property.
@@ -125,28 +123,6 @@ public class OrderCakeRequest {
         this.cake = value;
     }
 
-    /**
-     * Gets the value of the payment property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link PaymentCard }
-     *     
-     */
-    public PaymentCard getPayment() {
-        return payment;
-    }
 
-    /**
-     * Sets the value of the payment property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link PaymentCard }
-     *     
-     */
-    public void setPayment(PaymentCard value) {
-        this.payment = value;
-    }
 
 }

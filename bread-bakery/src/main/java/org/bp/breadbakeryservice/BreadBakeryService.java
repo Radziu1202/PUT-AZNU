@@ -5,20 +5,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.bp.OrderPreviewRequest;
 import org.bp.breadbakeryservice.model.Bread;
 import org.bp.breadbakeryservice.model.BreadOrderException;
 import org.bp.breadbakeryservice.model.CancelBreadOrderRequest;
 import org.bp.breadbakeryservice.model.CancelBreadOrderRequestResponse;
+import org.bp.breadbakeryservice.model.ExceptionResponse;
 import org.bp.breadbakeryservice.model.OrderBreadRequest;
 import org.bp.breadbakeryservice.model.OrderBreadResponse;
-import org.bp.onlinebakery.OrderExceptionMsg;
-import org.bp.paymentbakery.ExceptionResponse;
-import org.bp.paymentbakery.model.PaymentException;
-import org.bp.paymentbakery.model.PaymentRequest;
-import org.bp.paymentbakery.model.PaymentResponse;
-import org.bp.types.OrderException;
-import org.bp.types.OrderInfo;
+import org.bp.breadbakeryservice.model.OrderPreviewRequest;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -88,7 +82,7 @@ public class BreadBakeryService {
 			cost *= 2;
 		}
 
-		if (bread.isIsGlutenFree()) {
+		if (bread.getGlutenFree()) {
 			cost *= 1.5;
 		}
 		return BigDecimal.valueOf(cost);

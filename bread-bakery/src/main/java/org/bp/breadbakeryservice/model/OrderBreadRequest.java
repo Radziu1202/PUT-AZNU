@@ -1,7 +1,7 @@
 package org.bp.breadbakeryservice.model;
 
-import org.bp.types.DeliveryPlace;
-import org.bp.types.Person;
+import org.bp.DeliveryPlace;
+import org.bp.Person;
 
 public class OrderBreadRequest {
 

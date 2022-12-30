@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 import org.bp.bread.Bread;
-import org.bp.bread.Person;
+import org.bp.Person;
 
 /**
  * OrderBreadResponse

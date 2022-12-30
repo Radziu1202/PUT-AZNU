@@ -1,38 +1,62 @@
 package org.bp.gate.model;
 
+import org.bp.bread.Bread;
 import org.bp.bread.OrderBreadRequest;
+import org.bp.delivery.DeliveryRequest;
+import org.bp.Cake;
+import org.bp.DeliveryPlace;
 import org.bp.OrderCakeRequest;
+import org.bp.Person;
+import org.bp.payment.PaymentCard;
 import org.bp.payment.PaymentRequest;
 
 
 public class BakingRequest {
-    private OrderBreadRequest orderBreadRequest;
-    private OrderCakeRequest orderCakeRequest;
-    private PaymentRequest paymentRequest;
+    private Bread bread;
+    private Cake cake;
+    private DeliveryPlace deliveryPlace;
+    private Person person;
+    private PaymentCard paymentCard;
+   
+	public Bread getBread() {
+		return bread;
+	}
 
-    public OrderBreadRequest getOrderBreadRequest() {
-        return orderBreadRequest;
-    }
+	public void setBread(Bread bread) {
+		this.bread = bread;
+	}
 
-    public void setsetOrderCakeRequest(OrderBreadRequest orderBreadRequest) {
-        this.orderBreadRequest = orderBreadRequest;
-    }
+	public Cake getCake() {
+		return cake;
+	}
 
-    public OrderCakeRequest getOrderCakeRequest() {
-        return orderCakeRequest;
-    }
-
-    public void setOrderCakeRequest(OrderCakeRequest orderCakeRequest) {
-        this.orderCakeRequest = orderCakeRequest;
-    }
+	public void setCake(Cake cake) {
+		this.cake = cake;
+	}
 
 
-    public PaymentRequest getPaymentRequest() {
-        return paymentRequest;
-    }
+	public DeliveryPlace getDeliveryPlace() {
+		return deliveryPlace;
+	}
 
-    public void setPaymentRequest(PaymentRequest paymentRequest) {
-        this.paymentRequest = paymentRequest;
-    }
+	public void setDeliveryPlace(DeliveryPlace deliveryPlace) {
+		this.deliveryPlace = deliveryPlace;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public PaymentCard getPaymentCard() {
+		return paymentCard;
+	}
+
+	public void setPaymentCard(PaymentCard paymentCard) {
+		this.paymentCard = paymentCard;
+	}
 
 }

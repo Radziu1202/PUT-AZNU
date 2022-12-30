@@ -7,9 +7,12 @@ import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.model.SagaPropagation;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.rest.RestBindingMode;
-import org.bp.bread.OrderBreadResponse;
 import org.bp.CancelCakeOrderRequest;
 import org.bp.OrderInfo;
+import org.bp.bread.CancelBreadOrderRequest;
+import org.bp.bread.OrderBreadResponse;
+import org.bp.delivery.DeliveryRequest;
+import org.bp.delivery.DeliveryResponse;
 import org.bp.gate.model.BakingRequest;
 import org.bp.gate.model.BakingRequestResponse;
 import org.bp.gate.model.GateException;
@@ -22,139 +25,147 @@ import static org.apache.camel.model.rest.RestParamType.body;
 import static org.apache.camel.model.rest.RestParamType.path;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Component
 public class ManagmentService extends RouteBuilder {
 
-    @org.springframework.beans.factory.annotation.Autowired
-    BakeryIdentifierService bakeryIdentifierService;
+	@org.springframework.beans.factory.annotation.Autowired
+	BakeryIdentifierService bakeryIdentifierService;
 
-    @Override
-    public void configure() throws Exception {
-        restConfiguration()
-                .component("servlet")
-                .bindingMode(RestBindingMode.json)
-                .dataFormatProperty("prettyPrint", "true")
-                .enableCORS(true).contextPath("/api")
-                // turn on swagger api-doc
-                .apiContextPath("/api-doc").apiProperty("api.title", "Online Bakery API")
-                .apiProperty("api.version", "2.0.0");
+	@Override
+	public void configure() throws Exception {
+		restConfiguration().component("servlet").bindingMode(RestBindingMode.json)
+				.dataFormatProperty("prettyPrint", "true").enableCORS(true).contextPath("/api")
+				// turn on swagger api-doc
+				.apiContextPath("/api-doc").apiProperty("api.title", "Online Bakery API")
+				.apiProperty("api.version", "2.0.0");
 
-        rest("/orderBaking").description("Order Baking").consumes("application/json").produces("application/json")
+		rest("/orderBaking").description("Order Baking").consumes("application/json").produces("application/json")
 
-                .post("/order").description("online bakery").type(BakingRequest.class)
-                .outType(BakingRequestResponse.class).param().name("body").type(body).description("Baking order param")
-                .endParam().responseMessage().code(200).message("The Baking order ordered successfully")
-                .endResponseMessage().responseMessage().code(400).responseModel(GateException.class)
-                .message("Post order exception").endResponseMessage().to("direct:orderBaking");
+				.post("/order").description("online bakery").type(BakingRequest.class)
+				.outType(BakingRequestResponse.class).param().name("body").type(body).description("Baking order param")
+				.endParam().responseMessage().code(200).message("The Baking order ordered successfully")
+				.endResponseMessage().responseMessage().code(400).responseModel(GateException.class)
+				.message("Post order exception").endResponseMessage().to("direct:orderBaking");
 
-        cakes();
-        breads();
-        payments();
+		cakes();
+		breads();
+		payments();
+		deliveries();
+		from("direct:orderBaking").routeId("orderBaking").log("orderBaking fired").process((exchange) -> {
+			exchange.setProperty("paymentRequest",
+					Utils.preparePaymentRequest(exchange.getMessage().getBody(BakingRequest.class)));
+			exchange.setProperty("deliveryRequest",
+					Utils.prepareDeliveryRequest(exchange.getMessage().getBody(BakingRequest.class)));
+			
+			exchange.setProperty("bakeryOrderId", bakeryIdentifierService.generateOrderId());
+		}).saga().multicast().parallelProcessing().aggregationStrategy((prevEx, currentEx) -> {
+			if (currentEx.getException() != null)
+				return currentEx;
+			if (prevEx != null && prevEx.getException() != null)
+				return prevEx;
+			PaymentRequest paymentRequest;
+			DeliveryRequest deliveryRequest;
+			if (prevEx == null) {
+				paymentRequest = currentEx.getProperty("paymentRequest", PaymentRequest.class);
+				deliveryRequest = currentEx.getProperty("deliveryRequest", DeliveryRequest.class);
+			}
+			else {
+				paymentRequest = prevEx.getMessage().getBody(PaymentRequest.class);
+				deliveryRequest = prevEx.getMessage().getBody(DeliveryRequest.class);
+			}
 
-        from("direct:orderBaking").routeId("orderBaking").log("orderBaking fired")
-                .process((exchange) -> {
-                    exchange.setProperty("paymentRequest",
-                            Utils.preparePaymentRequest(exchange.getMessage().getBody(BakingRequest.class)));
-                    exchange.setProperty("bakeryOrderId", bakeryIdentifierService.generateOrderId());
-                })
-                .saga()
-                .multicast()
-                .parallelProcessing()
-                .aggregationStrategy((prevEx, currentEx) -> {
-                    if (currentEx.getException() != null)
-                        return currentEx;
-                    if (prevEx != null && prevEx.getException() != null)
-                        return prevEx;
-                    PaymentRequest paymentRequest;
-                    if (prevEx == null)
-                        paymentRequest = currentEx.getProperty("paymentRequest", PaymentRequest.class);
-                    else
-                        paymentRequest = prevEx.getMessage().getBody(PaymentRequest.class);
+			Object body = currentEx.getMessage().getBody();
+			BigDecimal cost;
+			String orderId;
+			if (body instanceof OrderInfo) {
+				cost = ((OrderInfo) body).getCost();
+				orderId = ((OrderInfo) body).getId();
+			} else if (body instanceof OrderBreadResponse) {
+				cost = ((OrderBreadResponse) body).getCost();
+				orderId = ((OrderBreadResponse) body).getId();
+			} else
+				return prevEx;
+			paymentRequest.setAmount(cost);
+			paymentRequest.setOrderId(orderId);
+			deliveryRequest.setOrderId(orderId);
+			currentEx.getMessage().setBody(paymentRequest);
+			return currentEx;
+		}).to("direct:orderCake").end().process((currentEx) -> {
+			currentEx.getMessage().setBody(currentEx.getProperty("paymentRequest", PaymentRequest.class));
+		}).to("direct:payment").end().process((currentEx) -> {
+			currentEx.getMessage().setBody(currentEx.getProperty("deliveryRequest", DeliveryRequest.class));
+		}).to("direct:delivery").end()
+.removeHeaders("Camel*").setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
 
-                    Object body = currentEx.getMessage().getBody();
-                    BigDecimal cost;
-                    String orderId;
-                    if (body instanceof OrderInfo) {
-                        cost = ((OrderInfo) body).getCost();
-                        orderId = ((OrderInfo) body).getId();
-                    } else if (body instanceof OrderBreadResponse) {
-                        cost = ((OrderBreadResponse) body).getCost();
-                        orderId = ((OrderBreadResponse) body).getId();
-                    } else
-                        return prevEx;
-                    paymentRequest.setAmount(cost);
-                    paymentRequest.setOrderId(orderId);
-                    currentEx.getMessage().setBody(paymentRequest);
-                    return currentEx;
-                }).to("direct:orderCake").end().process(
-                        (currentEx) -> {
-                            currentEx.getMessage().setBody(currentEx.getProperty("paymentRequest",
-                                    PaymentRequest.class));
-                        }
-                )
-                .to("direct:payment").removeHeaders("Camel*")
-                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
-        ;
+		;
 
-    }
+	}
 
-    public void cakes() {
+	public void cakes() {
 
-        final JaxbDataFormat jaxbCake = new JaxbDataFormat(OrderInfo.class.getPackage().getName());
+		final JaxbDataFormat jaxbCake = new JaxbDataFormat(OrderInfo.class.getPackage().getName());
 
-        from("direct:cancelCakeOrder").routeId("cancelCakeOrder")
-                .log("cancelCakeOrder fired")
-                .process((exchange) -> {
-                    String bakeryOrderId = exchange.getMessage().getHeader("bakeryOrderId", String.class);
-                    String cakeOrderId = bakeryIdentifierService.getCakeOrderId(bakeryOrderId);
-                    CancelCakeOrderRequest cancelCakeOrderRequest = new CancelCakeOrderRequest();
-                    cancelCakeOrderRequest.setOrderId(cakeOrderId);
-                    exchange.getMessage().setBody(cancelCakeOrderRequest);
-                })
-                .marshal(jaxbCake)
-                .to("spring-ws:http://localhost:8080/soap-api/service/onlineBakery")
-                .to("stream:out")
-                .unmarshal(jaxbCake)
-        ;
+		from("direct:cancelCakeOrder").routeId("cancelCakeOrder").log("cancelCakeOrder fired").process((exchange) -> {
+			String bakeryOrderId = exchange.getMessage().getHeader("bakeryOrderId", String.class);
+			String cakeOrderId = bakeryIdentifierService.getCakeOrderId(bakeryOrderId);
+			CancelCakeOrderRequest cancelCakeOrderRequest = new CancelCakeOrderRequest();
+			cancelCakeOrderRequest.setOrderId(cakeOrderId);
+			exchange.getMessage().setBody(cancelCakeOrderRequest);
+		}).marshal(jaxbCake).to("spring-ws:http://localhost:8080/soap-api/service/onlineBakery").to("stream:out")
+				.unmarshal(jaxbCake);
 
-        from("direct:orderCake").routeId("orderCake")
-                .log("orderCakeRequest fired")
-                .saga()
-                .propagation(SagaPropagation.MANDATORY)
-                .compensation("direct:cancelCakeOrder").option("bakeryOrderId",
-                simple("${exchangeProperty.bakeryOrderId}"))
-                .process((exchange) -> {
-                    exchange.getMessage()
-                            .setBody(Utils.prepareCakeOrderRequest(exchange.getMessage().getBody(BakingRequest.class)));
-                }).marshal(jaxbCake).to("spring-ws:http://localhost:8080/soap-api/service/onlineBakery").to("stream:out")
-                .unmarshal(jaxbCake)
-                .process((exchange) -> {
-                    OrderInfo cakeOrderResponse = exchange.getMessage().getBody(OrderInfo.class);
-                    String bakeryOrderId = exchange.getProperty("bakeryOrderId", String.class);
-                    bakeryIdentifierService.assignCakeOrderId(bakeryOrderId, cakeOrderResponse.getId());
-                });
+		from("direct:orderCake").routeId("orderCake").log("orderCakeRequest fired")
+			.saga()
+			.propagation(SagaPropagation.MANDATORY).compensation("direct:cancelCakeOrder")
+				.option("bakeryOrderId", simple("${exchangeProperty.bakeryOrderId}")).process((exchange) -> {
+					exchange.getMessage()
+							.setBody(Utils.prepareCakeOrderRequest(exchange.getMessage().getBody(BakingRequest.class)));
+				}).marshal(jaxbCake).to("spring-ws:http://localhost:8080/soap-api/service/onlineBakery")
+				.to("stream:out").unmarshal(jaxbCake).process((exchange) -> {
+					OrderInfo cakeOrderResponse = exchange.getMessage().getBody(OrderInfo.class);
+					String bakeryOrderId = exchange.getProperty("bakeryOrderId", String.class);
+					bakeryIdentifierService.assignCakeOrderId(bakeryOrderId, cakeOrderResponse.getId());
+				});
 
+	}
 
-    }
+	public void breads() {
+		from("direct:orderBread").routeId("orderBread").log("orderBread fired")
+		.saga()
+		.propagation(SagaPropagation.MANDATORY)
+		.compensation("direct:cancelBreadOrder")
+		.option("bakeryOrderId", simple("${exchangeProperty.bakeryOrderId}"))
+		.marshal()
+		.json()
+		.removeHeaders("CamelHttp*").to("rest:post:orderBread?host=localhost:8085").to("stream:out").unmarshal()
+		.json();
 
-    public void breads() {
-        from("direct:orderBread").routeId("orderBread").log("orderBread fired").marshal().json()
-                .removeHeaders("CamelHttp*").to("rest:post:orderBread?host=localhost:8085").to("stream:out").unmarshal()
-                .json();
+		from("direct:cancelBreadOrder").routeId("cancelBreadOrder").log("cancelBreadOrder fired")
+				.process((exchange) -> {
+					String bakeryOrderId = exchange.getMessage().getHeader("bakeryOrderId", String.class);
+					String breadOrderId = bakeryIdentifierService.getBreadOrderId(bakeryOrderId);
+					CancelBreadOrderRequest cancelBreadOrderRequest = new CancelBreadOrderRequest();
+					cancelBreadOrderRequest.setOrderId(breadOrderId);
+					exchange.getMessage().setBody(cancelBreadOrderRequest);
+				}).marshal().json().removeHeaders("CamelHttp*").to("rest:post:cancelBreadOrder?host=localhost:8085")
+				.to("stream:out").unmarshal().json();
+	}
 
-    }
+	public void payments() {
 
-    public void payments() {
+		from("direct:payment").routeId("payment").log("payment fired").marshal().json().removeHeaders("CamelHttp*")
+				.to("rest:post:payment?host=localhost:8083").unmarshal()
+				.json(JsonLibrary.Jackson, PaymentResponse.class).to("stream:out")
 
-        from("direct:payment").routeId("payment")
-                .log("payment fired")
-                .marshal().json()
-                .removeHeaders("CamelHttp*")
-                .to("rest:post:payment?host=localhost:8083")
-                .unmarshal().json(JsonLibrary.Jackson, PaymentResponse.class)
-                .to("stream:out")
-                
-        ;
-    }
+		;
+	}
+
+	public void deliveries() {
+		from("direct:delivery").routeId("delivery").log("delivery fired").marshal().json().removeHeaders("CamelHttp*")
+				.to("rest:post:orderDelivery?host=localhost:8088").unmarshal()
+				.json(JsonLibrary.Jackson, DeliveryResponse.class).to("stream:out");
+	}
+
 }

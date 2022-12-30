@@ -2,16 +2,11 @@ package org.bp.breadbakeryservice.model;
 
 public class Bread {
 
-    private boolean isGlutenFree;
+    private Boolean glutenFree;
     private String name;
     private String breadType;
     
-	public boolean isIsGlutenFree() {
-		return isGlutenFree;
-	}
-	public void setIsGlutenFree(boolean isGlutenFree) {
-		this.isGlutenFree = isGlutenFree;
-	}
+	
 	public String getName() {
 		return name;
 	}
@@ -23,5 +18,11 @@ public class Bread {
 	}
 	public void setBreadType(String breadType) {
 		this.breadType = breadType;
+	}
+	public Boolean getGlutenFree() {
+		return glutenFree;
+	}
+	public void setGlutenFree(Boolean glutenFree) {
+		this.glutenFree = glutenFree;
 	}
 }

@@ -3,8 +3,7 @@ package org.bp.breadbakeryservice;
 import java.util.Date;
 
 import org.bp.breadbakeryservice.model.BreadOrderException;
-import org.bp.onlinebakery.OrderExceptionMsg;
-import org.bp.paymentbakery.ExceptionResponse;
+import org.bp.breadbakeryservice.model.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

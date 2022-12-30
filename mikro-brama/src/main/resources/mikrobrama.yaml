@@ -1,0 +1,178 @@
+openapi: 3.0.1
+info:
+  title: online bakery microservice
+  description: Micro service to online bakery
+  contact:
+    email: supportm@bp.org
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: http://localhost:8090
+tags:
+- name: bakery
+  description: oreder different bakings
+paths:
+  /order:
+    post:
+      tags:
+      - order
+      summary: order of bakings
+      operationId: orderBaking
+      requestBody:
+        description: Details of order you are making
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BakingRequest'
+        required: true
+      responses:
+        400:
+          description: Problem during processing of the order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+
+components:
+  schemas:
+    Person:
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+    DeliveryPlace:
+      type: object
+      properties:
+        postalCode: 
+           type: string
+        city:
+           type: string
+        address:
+           type: string
+    Cake:
+      type: object
+      properties:
+        cakeType:
+          type: string
+        isVegan:
+          type: boolean
+        birthdayName:
+          type: string
+    PaymentCard:
+      type: object
+      properties:
+        name:
+          type: string
+        validTo:
+          type: string
+        number:
+          type: string
+    OrderInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        cost:
+          type: number
+        person:
+          $ref: '#/components/schemas/Person'
+        payment:
+          $ref: '#/components/schemas/PaymentCard'
+        deliveryPlace:
+          $ref: '#/components/schemas/DeliveryPlace'
+    Bread:
+      type: object
+      properties:
+        breadType:
+          type: string
+        isGlutenFree:
+          type: boolean
+        name:
+          type: boolean
+    OrderCakeRequest:
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+        cake:
+          $ref: '#/components/schemas/Cake'
+        deliveryPlace:
+           $ref: '#/components/schemas/DeliveryPlace'
+    OrderBreadRequest:
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+        payment:
+          $ref: '#/components/schemas/PaymentCard'
+        bread:
+          $ref: '#/components/schemas/Bread'
+        deliveryPlace:
+           $ref: '#/components/schemas/DeliveryPlace'
+    OrderBreadResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        person:
+           $ref: '#/components/schemas/Person'
+        cost:
+          type: number
+        bread:
+           $ref: '#/components/schemas/Bread'
+    BakingRequest:
+      type: object
+      properties:
+        person:
+          $ref: '#/components/schemas/Person'
+        bread:
+          $ref: '#/components/schemas/Bread'
+        cake:
+          $ref: '#/components/schemas/Cake'
+        paymentCard:
+          $ref: '#/components/schemas/PaymentCard'
+        deliveryPlace:
+          $ref: '#/components/schemas/DeliveryPlace'     
+    DeliveryRequest:
+      type: object
+      properties:
+        orderId:
+           type: string
+        deliveryPlace:
+          $ref: '#/components/schemas/DeliveryPlace'
+    DeliveryResponse:
+      type: object
+      properties:
+        deliveryPlace:
+          $ref: '#/components/schemas/DeliveryPlace'
+        deliveryId:
+          type: string
+        orderId:
+           type: string
+        deliveryDate:
+          type: date-time
+    BakingRequestResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        orderBreadResponse:
+          $ref: '#/components/schemas/OrderBreadResponse'
+        
+        orderCakeResponse:
+          $ref: '#/components/schemas/OrderInfo'
+        orderDeliveryResponse:
+          $ref: '#/components/schemas/DeliveryResponse'
+    
+    ExceptionResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        message:
+          type: string

@@ -1,0 +1,219 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "OpenAPI definition",
+		"version": "v0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8088",
+			"description": "Generated server url"
+		}
+	],
+	"paths": {
+		"/orderDelivery": {
+			"post": {
+				"tags": [
+					"delivery-service"
+				],
+				"summary": "orderDelivery",
+				"description": "operations for delivery service",
+				"operationId": "orderDelivery",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeliveryRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeliveryResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ExceptionResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/deliveryPreview": {
+			"post": {
+				"tags": [
+					"delivery-service"
+				],
+				"summary": "delivery preview",
+				"description": "operations for delivery service",
+				"operationId": "deliveryPreview",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeliveryPreviewRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeliveryResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ExceptionResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/cancelDelivery": {
+			"post": {
+				"tags": [
+					"delivery-service"
+				],
+				"summary": "cancel delivery",
+				"description": "operations for deliveryService",
+				"operationId": "cancelBreadOrder",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CancelDeliveryRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeliveryResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ExceptionResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"DeliveryPlace": {
+				"type": "object",
+				"properties": {
+					"postalCode": {
+						"type": "string"
+					},
+					"city": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					}
+				}
+			},
+			"DeliveryResponse": {
+				"type": "object",
+				"properties": {
+					"deliveryDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deliveryPlace": {
+						"$ref": "#/components/schemas/DeliveryPlace"
+					},
+					"deliveryId": {
+						"type": "string"
+					},
+					"orderId": {
+						"type": "string"
+					}
+				}
+			},
+			"ExceptionResponse": {
+				"type": "object",
+				"properties": {
+					"timestamp": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"message": {
+						"type": "string"
+					},
+					"details": {
+						"type": "string"
+					}
+				}
+			},
+			"DeliveryRequest": {
+				"type": "object",
+				"properties": {
+					"deliveryPlace": {
+						"$ref": "#/components/schemas/DeliveryPlace"
+					},
+					"orderId": {
+						"type": "string"
+					}
+				}
+			},
+			"DeliveryPreviewRequest": {
+				"type": "object",
+				"properties": {
+					"orderId": {
+						"type": "string"
+					}
+				}
+			},
+			"CancelDeliveryRequest": {
+				"type": "object",
+				"properties": {
+					"deliveryId": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	}
+}

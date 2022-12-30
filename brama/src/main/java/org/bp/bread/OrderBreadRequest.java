@@ -24,8 +24,8 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 
 import org.bp.bread.Bread;
-import org.bp.bread.DeliveryPlace;
-import org.bp.bread.Person;
+import org.bp.DeliveryPlace;
+import org.bp.Person;
 
 /**
  * OrderBreadRequest

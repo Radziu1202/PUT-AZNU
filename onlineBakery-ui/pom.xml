@@ -46,14 +46,20 @@
 			<artifactId>payment-bakery</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.bp</groupId>
 			<artifactId>bread-bakery</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bp</groupId>
 			<artifactId>online-bakery</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bp</groupId>
+			<artifactId>mikrobrama</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
@@ -72,6 +78,7 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.cxf</groupId>
 				<artifactId>cxf-codegen-plugin</artifactId>
@@ -98,6 +105,8 @@
 					</execution>
 				</executions>
 			</plugin>
+		
+			
 		</plugins>
 	</build>
 
