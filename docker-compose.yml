@@ -1,0 +1,51 @@
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka 
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  gateway:
+    image: aznu/micro-baking-ordering
+    ports:
+      - "8090:8090"
+    depends_on:
+      - kafka
+    environment:
+      BAKERY_KAFKA_SERVER: kafka:9092
+      BAKERY_SERVICE_TYPE: gateway
+  payment:
+    image: aznu/micro-baking-ordering
+    depends_on:
+      - kafka
+    environment:
+      BAKERY_KAFKA_SERVER: kafka:9092
+      BAKERY_SERVICE_TYPE: payment
+  delivery:
+    image: aznu/delivery-bakery2
+    depends_on:
+      - kafka
+    environment:
+      BAKERY_KAFKA_SERVER: kafka:9092
+      BAKERY_SERVICE_TYPE: delivery
+  cake2:
+    image: aznu/cake-bakery
+    ports:
+      - "8080:8080"
+      - "5678:5678"
+    depends_on:
+      - kafka
+    environment:
+      BAKERY_KAFKA_SERVER: kafka:9092
+      BAKERY_SERVICE_TYPE: cake
+
