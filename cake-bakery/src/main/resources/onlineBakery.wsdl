@@ -44,6 +44,10 @@
 	<wsdl:message name="orderExceptionMsg">
 		<wsdl:part element="bp:orderException" name="payload" />
 	</wsdl:message>
+	
+	<wsdl:message name="orderPreviewExceptionMsg">
+		<wsdl:part element="bp:orderPreviewException" name="payload" />
+	</wsdl:message>
 
 	<wsdl:portType name="OnlineBakery">
 		<wsdl:operation name="orderCake">
@@ -63,8 +67,8 @@
 		<wsdl:operation name="orderPreview">
 			<wsdl:input message="tns:orderPreviewRequestMsg" />
 			<wsdl:output message="tns:orderPreviewResponseMsg" />
-			<wsdl:fault message="tns:orderExceptionMsg"
-				name="orderException" />
+			<wsdl:fault message="orderPreviewExceptionMsg"
+				name="orderPreviewException" />
 		</wsdl:operation>
 		
 		<wsdl:operation name="payForOrder">

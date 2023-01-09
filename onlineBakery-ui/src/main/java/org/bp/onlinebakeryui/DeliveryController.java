@@ -3,7 +3,6 @@ package org.bp.onlinebakeryui;
 import java.net.URL;
 
 import org.bp.OrderPreviewRequest;
-import org.bp.breadbakeryservice.model.OrderBreadResponse;
 import org.bp.onlinebakery.OnlineBakery;
 import org.bp.onlinebakery.OnlineBakeryEndpointService;
 import org.bp.onlinebakery.OrderExceptionMsg;

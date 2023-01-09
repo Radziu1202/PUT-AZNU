@@ -40,9 +40,9 @@ components:
     Person:
       type: object
       properties:
-        firstname:
+        firstName:
           type: string
-        lastname:
+        lastName:
           type: string
     DeliveryPlace:
       type: object

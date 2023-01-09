@@ -17,7 +17,7 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import org.bp.mikrobrama.model.DeliveryPlace;
+import org.bp.types.DeliveryPlace;
 /**
  * DeliveryRequest
  */

@@ -7,11 +7,17 @@ import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.ext.logging.LoggingFeature;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFServlet;
+import org.bp.state.ProcessingEvent;
+import org.bp.state.ProcessingState;
+import org.bp.state.StateMachineBuilder;
+import org.bp.state.StateService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 
 
 @Configuration
@@ -54,5 +60,29 @@ public class ApplicationConfig {
 		
 		return endpoint;
 	}
+	
+	
+	 @Bean(name="basicStateMachineBuilder")
+	    public StateMachineBuilder basicStateMachineBuilder() {
+	    	StateMachineBuilder smb = new StateMachineBuilder();
+	    	smb.initialState(ProcessingState.NONE)
+	        .add(ProcessingState.NONE,ProcessingEvent.START,ProcessingState.STARTED)
+	        .add(ProcessingState.STARTED,ProcessingEvent.FINISH,ProcessingState.FINISHED)
+	    	.add(ProcessingState.NONE,ProcessingEvent.CANCEL,ProcessingState.CANCELLED)	            
+	    	.add(ProcessingState.STARTED,ProcessingEvent.CANCEL,ProcessingState.CANCELLED)	            
+	    	.add(ProcessingState.FINISHED,ProcessingEvent.CANCEL,ProcessingState.CANCELLED)	            
+	    	.add(ProcessingState.CANCELLED,ProcessingEvent.START,ProcessingState.CANCELLED)	            
+	    	.add(ProcessingState.CANCELLED,ProcessingEvent.FINISH,ProcessingState.CANCELLED)	            
+	    	.add(ProcessingState.FINISHED,ProcessingEvent.COMPLETE,ProcessingState.COMPLETED)
+			.add(ProcessingState.CANCELLED,ProcessingEvent.COMPLETE,ProcessingState.COMPLETED)	  	            
+	         ;
+	    	return smb;
+	    }
+
+	    @Bean
+	    @Scope("prototype")
+	    public StateService stateService(@Qualifier("basicStateMachineBuilder") StateMachineBuilder stateMachineBuilder) {
+	    	return new StateService (stateMachineBuilder);
+	    }
 
 }

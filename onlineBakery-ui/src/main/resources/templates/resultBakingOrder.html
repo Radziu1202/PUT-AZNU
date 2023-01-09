@@ -151,16 +151,17 @@ button:hover {
 
 <body>
 	<form action="#" class="decor"
-	 th:object="${bakingRequestResponse}" method="post"
+	  method="get"
 	>
 		<div class="form-left-decoration"></div>
 		<div class="form-right-decoration"></div>
 		<div class="circle"></div>
 		<div class="form-inner">
-			<h1>Result of  order</h1>
-			<h2 th:text="'id: ' + ${id}"></h2>
-			<h2 th:text="'first name ' + ${orderCakeResponse.person.firstName}"></h2>
+			<h1> order completed</h1>
 
+			<h2 th:text="'Order Id ' + ${orderId}"></h2>
+				 	<input type="submit" value="go back to menu"  formaction="menu" />
+			
 		</div>
 	</form>
 </body>

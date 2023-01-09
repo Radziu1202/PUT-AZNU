@@ -9,9 +9,7 @@ import javax.xml.namespace.QName;
 import org.bp.CancelCakeOrderRequest;
 import org.bp.OrderCakeRequest;
 import org.bp.OrderPreviewRequest;
-import org.bp.breadbakeryservice.model.BreadOrderException;
-import org.bp.breadbakeryservice.model.CancelBreadOrderRequestResponse;
-import org.bp.breadbakeryservice.model.OrderBreadResponse;
+
 import org.bp.onlinebakery.OnlineBakery;
 import org.bp.onlinebakery.OnlineBakeryEndpoint;
 import org.bp.onlinebakery.OnlineBakeryEndpointService;
@@ -49,7 +47,7 @@ public class CakeOrderingController {
 		model.addAttribute("cancelCakeOrderRequest", ocf);
 		return "cancelCakeOrder";
 	}
-
+/*
 	@PostMapping("/cancelCakeOrder")
 	public String cancelCakeOrder(@ModelAttribute CancelCakeOrderRequest ocf, Model model) {
 		URL wsdlURL = OnlineBakeryEndpointService.WSDL_LOCATION;
@@ -85,7 +83,7 @@ public class CakeOrderingController {
 		}
 
 	}
-
+*/
 	@PostMapping("/orderCake")
 	public String orderCake(@ModelAttribute OrderCakeRequest ocf, Model model) {
 		URL wsdlURL = OnlineBakeryEndpointService.WSDL_LOCATION;
@@ -112,7 +110,7 @@ public class CakeOrderingController {
 		}
 
 	}
-
+/*
 	@GetMapping("/orderPreview")
 	public String orderPreviewForm(Model model) {
 		OrderPreviewRequest  opr = new OrderPreviewRequest();
@@ -166,6 +164,6 @@ public class CakeOrderingController {
 		}
 
 	}
-	
+	*/
 
 }

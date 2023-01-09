@@ -12,6 +12,7 @@
     			<element name="deliveryPlace" type="bpt:DeliveryPlace"/>
     			<element name="cake" type="bpt:Cake"/>
     			<element name="payment" type="bpt:PaymentCard"/>
+    			<element name="orderId" type="string"/>
 			</sequence>
 		</complexType>
 	</element>
@@ -39,4 +40,6 @@
 	
 
 	<element name="orderException" type="bpt:OrderException" />
+	<element name="orderPreviewException" type="bpt:OrderPreviewException" />
+	
 </schema>

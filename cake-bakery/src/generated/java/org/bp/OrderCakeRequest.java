@@ -26,6 +26,7 @@ import org.bp.types.Person;
  *         &lt;element name="deliveryPlace" type="{http://www.bp.org/types}DeliveryPlace"/&gt;
  *         &lt;element name="cake" type="{http://www.bp.org/types}Cake"/&gt;
  *         &lt;element name="payment" type="{http://www.bp.org/types}PaymentCard"/&gt;
+ *         &lt;element name="orderId" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -39,7 +40,8 @@ import org.bp.types.Person;
     "person",
     "deliveryPlace",
     "cake",
-    "payment"
+    "payment",
+    "orderId"
 })
 @XmlRootElement(name = "orderCakeRequest")
 public class OrderCakeRequest {
@@ -52,6 +54,8 @@ public class OrderCakeRequest {
     protected Cake cake;
     @XmlElement(required = true)
     protected PaymentCard payment;
+    @XmlElement(required = true)
+    protected String orderId;
 
     /**
      * Gets the value of the person property.
@@ -147,6 +151,30 @@ public class OrderCakeRequest {
      */
     public void setPayment(PaymentCard value) {
         this.payment = value;
+    }
+
+    /**
+     * Gets the value of the orderId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getOrderId() {
+        return orderId;
+    }
+
+    /**
+     * Sets the value of the orderId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setOrderId(String value) {
+        this.orderId = value;
     }
 
 }

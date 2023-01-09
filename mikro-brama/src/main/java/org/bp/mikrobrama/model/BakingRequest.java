@@ -13,6 +13,11 @@
 package org.bp.mikrobrama.model;
 
 import java.util.Objects;
+
+import org.bp.types.Cake;
+import org.bp.types.DeliveryPlace;
+import org.bp.types.Person;
+
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;

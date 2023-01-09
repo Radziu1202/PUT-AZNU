@@ -77,4 +77,12 @@ public class ObjectFactory {
         return new OrderException();
     }
 
+    /**
+     * Create an instance of {@link OrderPreviewException }
+     * 
+     */
+    public OrderPreviewException createOrderPreviewException() {
+        return new OrderPreviewException();
+    }
+
 }

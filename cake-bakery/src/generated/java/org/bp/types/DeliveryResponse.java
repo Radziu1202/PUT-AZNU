@@ -1,4 +1,4 @@
-package org.bp.deliveryserivce.model;
+package org.bp.types;
 
 import java.util.Date;
 

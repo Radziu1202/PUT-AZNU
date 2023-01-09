@@ -1,19 +1,34 @@
-package org.bp.deliveryserivce.model;
+package org.bp.types;
 
 import java.util.Date;
 
 import org.bp.types.DeliveryPlace;
 
 
-public class DeliveryRequest {
-	
+public class DeliveryResponse {
+
+	private Date deliveryDate;
 	private DeliveryPlace deliveryPlace;
+	private String deliveryId;
 	private String orderId;
+
 	public DeliveryPlace getDeliveryPlace() {
 		return deliveryPlace;
 	}
 	public void setDeliveryPlace(DeliveryPlace deliveryPlace) {
 		this.deliveryPlace = deliveryPlace;
+	}
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+	public String getDeliveryId() {
+		return deliveryId;
+	}
+	public void setDeliveryId(String deliveryId) {
+		this.deliveryId = deliveryId;
 	}
 	public String getOrderId() {
 		return orderId;

@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 import org.bp.types.OrderException;
 import org.bp.types.OrderInfo;
+import org.bp.types.OrderPreviewException;
 
 
 /**
@@ -31,6 +32,7 @@ public class ObjectFactory {
     private final static QName _OrderPreviewResponse_QNAME = new QName("http://www.bp.org", "orderPreviewResponse");
     private final static QName _OrderIdRequest_QNAME = new QName("http://www.bp.org", "orderIdRequest");
     private final static QName _OrderException_QNAME = new QName("http://www.bp.org", "orderException");
+    private final static QName _OrderPreviewException_QNAME = new QName("http://www.bp.org", "orderPreviewException");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.bp
@@ -126,6 +128,19 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.bp.org", name = "orderException")
     public JAXBElement<OrderException> createOrderException(OrderException value) {
         return new JAXBElement<OrderException>(_OrderException_QNAME, OrderException.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link OrderPreviewException }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link OrderPreviewException }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://www.bp.org", name = "orderPreviewException")
+    public JAXBElement<OrderPreviewException> createOrderPreviewException(OrderPreviewException value) {
+        return new JAXBElement<OrderPreviewException>(_OrderPreviewException_QNAME, OrderPreviewException.class, null, value);
     }
 
 }

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import org.bp.mikrobrama.model.DeliveryResponse;
 import org.bp.mikrobrama.model.OrderBreadResponse;
-import org.bp.mikrobrama.model.OrderInfo;
+import org.bp.types.OrderInfo;
 /**
  * BakingRequestResponse
  */

@@ -1,4 +1,4 @@
-package org.bp.deliveryserivce.model;
+package org.bp.types;
 
 public class CancelDeliveryRequest {
 	private String deliveryId;

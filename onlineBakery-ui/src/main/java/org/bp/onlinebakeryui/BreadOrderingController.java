@@ -5,10 +5,7 @@ import java.net.URL;
 import javax.xml.namespace.QName;
 
 import org.bp.OrderPreviewRequest;
-import org.bp.breadbakeryservice.model.CancelBreadOrderRequest;
-import org.bp.breadbakeryservice.model.CancelBreadOrderRequestResponse;
-import org.bp.breadbakeryservice.model.OrderBreadRequest;
-import org.bp.breadbakeryservice.model.OrderBreadResponse;
+
 import org.bp.onlinebakery.OnlineBakery;
 import org.bp.onlinebakery.OrderExceptionMsg;
 import org.bp.paymentbakery.model.PaymentException;
@@ -29,7 +26,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Controller
 public class BreadOrderingController {
-	
+	/*
 
 	@Autowired
 	RestTemplate restTemplate;
@@ -105,5 +102,5 @@ public class BreadOrderingController {
          }
 
 	}
-
+*/
 }

@@ -10,30 +10,43 @@
  * Do not edit the class manually.
  */
 
-package org.bp.mikrobrama.model;
+package org.bp.types;
 
 import java.util.Objects;
+
+import org.bp.types.Bread;
+import org.bp.types.Cake;
+import org.bp.types.DeliveryPlace;
+import org.bp.types.PaymentCard;
+import org.bp.types.Person;
+
 import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * OrderCakeRequest
+ * BakingRequest
  */
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-23T15:31:47.012026+01:00[Europe/Warsaw]")
-public class OrderCakeRequest {
+public class BakingRequest {
   @JsonProperty("person")
   private Person person = null;
+
+  @JsonProperty("bread")
+  private Bread bread = null;
 
   @JsonProperty("cake")
   private Cake cake = null;
 
+  @JsonProperty("paymentCard")
+  private PaymentCard paymentCard = null;
+
   @JsonProperty("deliveryPlace")
   private DeliveryPlace deliveryPlace = null;
 
-  public OrderCakeRequest person(Person person) {
+  public BakingRequest person(Person person) {
     this.person = person;
     return this;
   }
@@ -50,7 +63,24 @@ public class OrderCakeRequest {
     this.person = person;
   }
 
-  public OrderCakeRequest cake(Cake cake) {
+  public BakingRequest bread(Bread bread) {
+    this.bread = bread;
+    return this;
+  }
+
+   /**
+   * Get bread
+   * @return bread
+  **/
+  public Bread getBread() {
+    return bread;
+  }
+
+  public void setBread(Bread bread) {
+    this.bread = bread;
+  }
+
+  public BakingRequest cake(Cake cake) {
     this.cake = cake;
     return this;
   }
@@ -67,7 +97,24 @@ public class OrderCakeRequest {
     this.cake = cake;
   }
 
-  public OrderCakeRequest deliveryPlace(DeliveryPlace deliveryPlace) {
+  public BakingRequest paymentCard(PaymentCard paymentCard) {
+    this.paymentCard = paymentCard;
+    return this;
+  }
+
+   /**
+   * Get paymentCard
+   * @return paymentCard
+  **/
+  public PaymentCard getPaymentCard() {
+    return paymentCard;
+  }
+
+  public void setPaymentCard(PaymentCard paymentCard) {
+    this.paymentCard = paymentCard;
+  }
+
+  public BakingRequest deliveryPlace(DeliveryPlace deliveryPlace) {
     this.deliveryPlace = deliveryPlace;
     return this;
   }
@@ -93,25 +140,29 @@ public class OrderCakeRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OrderCakeRequest orderCakeRequest = (OrderCakeRequest) o;
-    return Objects.equals(this.person, orderCakeRequest.person) &&
-        Objects.equals(this.cake, orderCakeRequest.cake) &&
-        Objects.equals(this.deliveryPlace, orderCakeRequest.deliveryPlace);
+    BakingRequest bakingRequest = (BakingRequest) o;
+    return Objects.equals(this.person, bakingRequest.person) &&
+        Objects.equals(this.bread, bakingRequest.bread) &&
+        Objects.equals(this.cake, bakingRequest.cake) &&
+        Objects.equals(this.paymentCard, bakingRequest.paymentCard) &&
+        Objects.equals(this.deliveryPlace, bakingRequest.deliveryPlace);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(person, cake, deliveryPlace);
+    return Objects.hash(person, bread, cake, paymentCard, deliveryPlace);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OrderCakeRequest {\n");
+    sb.append("class BakingRequest {\n");
     
     sb.append("    person: ").append(toIndentedString(person)).append("\n");
+    sb.append("    bread: ").append(toIndentedString(bread)).append("\n");
     sb.append("    cake: ").append(toIndentedString(cake)).append("\n");
+    sb.append("    paymentCard: ").append(toIndentedString(paymentCard)).append("\n");
     sb.append("    deliveryPlace: ").append(toIndentedString(deliveryPlace)).append("\n");
     sb.append("}");
     return sb.toString();

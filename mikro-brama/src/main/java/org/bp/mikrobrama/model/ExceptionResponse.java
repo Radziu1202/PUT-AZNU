@@ -14,6 +14,8 @@ package org.bp.mikrobrama.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -25,12 +27,12 @@ import java.time.OffsetDateTime;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-12-23T15:31:47.012026+01:00[Europe/Warsaw]")
 public class ExceptionResponse {
   @JsonProperty("timestamp")
-  private OffsetDateTime timestamp = null;
+  private Date timestamp = null;
 
   @JsonProperty("message")
   private String message = null;
 
-  public ExceptionResponse timestamp(OffsetDateTime timestamp) {
+  public ExceptionResponse timestamp(Date timestamp) {
     this.timestamp = timestamp;
     return this;
   }
@@ -39,11 +41,11 @@ public class ExceptionResponse {
    * Get timestamp
    * @return timestamp
   **/
-  public OffsetDateTime getTimestamp() {
+  public Date getTimestamp() {
     return timestamp;
   }
 
-  public void setTimestamp(OffsetDateTime timestamp) {
+  public void setTimestamp(Date timestamp) {
     this.timestamp = timestamp;
   }
 
